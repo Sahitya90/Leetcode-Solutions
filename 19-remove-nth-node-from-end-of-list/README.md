@@ -34,3 +34,24 @@
 
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> Could you do this in one pass?</p>
+
+
+<p>Example: List = [D] -> [1] -> [2] -> [3] -> [4] -> [5] and n = 2.
+
+n + 1 is 3. This loop runs 3 times.
+
+i = 0: fast moves to [1]
+
+i = 1: fast moves to [2]
+
+i = 2: fast moves to [3]
+
+The for loop finishes.
+
+At the end of Phase 1:
+
+slow is still at [D].
+
+fast is at [3].
+
+You have successfully created a "gap" of 3 nodes ([1], [2], [3]) between your two pointers.</p>
