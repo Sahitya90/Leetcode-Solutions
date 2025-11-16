@@ -1,27 +1,26 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        Map<Integer, Integer> map =  new HashMap<>();
+         int count = 0 ;
+         int currentSum = 0;
 
-        int counter = 0;
+         Map<Integer, Integer> prefixSumMap = new HashMap<>();
 
-        int currSum = 0;
+         prefixSumMap.put(0,1);
 
-        map.put(0, 1);
+         for (int i = 0; i<nums.length; i++){
+            currentSum += nums[i];
 
-        for(int num : nums){
-
-            currSum += num;
-
-            int prevSum = currSum -k;
+            int complement = currentSum - k;
 
             
+                count += prefixSumMap.getOrDefault(complement, 0);
 
-            if(map.containsKey(prevSum)){
-                counter += map.get(prevSum); 
-            }
-            map.put(currSum, map.getOrDefault(currSum, 0) + 1);
+                prefixSumMap.put(currentSum, prefixSumMap.getOrDefault(currentSum, 0) + 1);
+            
+         }
+         return count;
 
-        }
-        return counter;
+
+
     }
 }
