@@ -4,18 +4,18 @@ class Solution {
         if(nums == null || nums.length == 0) return 0;
         
 
-        double currentMax = nums[0];
-        double currentMin = nums[0];
-        double maximum = nums[0];
+        int currentMax = nums[0];
+        int currentMin = nums[0];
+        int maximum = nums[0];
 
         
 
         for(int i =1; i<nums.length; i++){
             
-            double current = nums[i];
+            int current = nums[i];
 
             if(current < 0){
-                double temp = currentMax;
+                int temp = currentMax;
                 currentMax = currentMin;
                 currentMin = temp;
             }
@@ -24,6 +24,6 @@ class Solution {
 
             maximum = Math.max(maximum, currentMax);
         }
-        return (int) maximum;
+        return maximum;
     }
 }
