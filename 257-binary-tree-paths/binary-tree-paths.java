@@ -1,40 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> result = new ArrayList<>();
-        if (root != null) {
-            // We start with one single StringBuilder
-            buildPath(root, new StringBuilder(), result);
+        
+        if(root != null){
+            helper(root, new StringBuilder(), result);
         }
         return result;
     }
+    public void helper(TreeNode node, StringBuilder currentPaths, List<String> result){
 
-    private void buildPath(TreeNode node, StringBuilder currentPath, List<String> result) {
-        
-        // 1. THE SAVE STATE (Crucial for Backtracking)
-        // We remember exactly how long the string was before we touched it
-        int originalLength = currentPath.length();
+        int size = currentPaths.length();
 
-        // 2. Add the current node's value
-        currentPath.append(node.val);
+        currentPaths.append(node.val);
 
-        // 3. THE GOAL: Are we at a leaf?
-        if (node.left == null && node.right == null) {
-            result.add(currentPath.toString()); // Save the finished path!
-        } else {
-            // 4. EXPLORE: Add the arrow and keep digging
-            currentPath.append("->");
-            if (node.left != null) {
-                buildPath(node.left, currentPath, result);
-            }
-            if (node.right != null) {
-                buildPath(node.right, currentPath, result);
-            }
+        if(node.left == null && node.right == null){
+            result.add(currentPaths.toString());
+        }
+        else{
+            currentPaths.append("->");
+            if(node.left != null){
+            helper(node.left, currentPaths, result);
+        }
+        if(node.right != null){
+            helper(node.right, currentPaths, result);
         }
 
-        // 5. THE BACKTRACK (Clean up!)
-        // Before we bounce back up to the parent, we chop off everything 
-        // we just added. This leaves the StringBuilder perfectly clean 
-        // for the sibling branch to use!
-        currentPath.setLength(originalLength);
+        }
+        currentPaths.setLength(size);
     }
 }
