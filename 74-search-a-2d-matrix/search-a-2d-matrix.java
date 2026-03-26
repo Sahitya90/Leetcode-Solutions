@@ -5,30 +5,32 @@ class Solution {
 
         int top = 0;
         int bottom = row - 1 ;
+        int targetRow=0;
 
         while(top<=bottom){
-            int newRow = top + (bottom - top)/2;
+            int mid = top + (bottom - top)/2;
 
-            if(target > matrix[newRow][col-1]){
-                top = newRow + 1;
+            if(target > matrix[mid][col-1]){
+                top = mid + 1;
             }
-            else if(target < matrix[newRow][0]){
-                bottom = newRow -1;
+            else if(target < matrix[mid][0]){
+                bottom = mid -1;
             }
             else{
+                targetRow = mid;
                 break;
             }
         }
-        int Row = (top + bottom) /2;
+        
         int left = 0; 
         int right = col -1;
         while(left<=right){
            int mid = left + (right - left)/2;
             
-            if(target > matrix[Row][mid]){
+            if(target > matrix[targetRow][mid]){
                 left = mid + 1;
             }
-            else if(target < matrix[Row][mid]){
+            else if(target < matrix[targetRow][mid]){
                 right = mid - 1;
             }
             else{
