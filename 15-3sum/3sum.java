@@ -6,11 +6,9 @@ class Solution {
 
         int n = nums.length;
         for(int i=0; i<=n-1;i++){
-            if(nums[i]>0){
-                break;
-            }
+           
             if(i>0 && nums[i]==nums[i-1]){
-                continue;
+                continue; //continue to move i forward till found a new element
             }
 
             int left = i+1;
