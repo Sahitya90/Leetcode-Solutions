@@ -21,7 +21,7 @@ class Solution {
             else{
                 right--;
             }
-            maxArea = Math.max(maxArea, currArea);
+            
         }
         return maxArea;
     }
