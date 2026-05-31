@@ -1,20 +1,18 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> list = new HashMap<>();
+        
+        Map<Integer, Integer> map = new HashMap<>();
 
-        for(int i = 0; i < nums.length; i++){
-            int c = nums[i];
-            int d = target - c;
+        for(int i = 0; i< nums.length; i++){
 
-            if(list.containsKey(d)){
-                return new int[] {list.get(d), i};
+            int current = target - nums[i];
+
+            if(map.containsKey(current)){
+                return new int[]{map.get(current), i};
             }
-
-            list.put(c, i);
-
-        
+            
+            map.put(nums[i], i);
         }
-        
-    throw new IllegalArgumentException("No two sum solution");
+        return new int[]{-1,-1};
     }
 }
