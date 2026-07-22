@@ -2,21 +2,32 @@ class Solution {
     public int subarraySum(int[] nums, int k) {
          int count = 0 ;
          int currentSum = 0;
+         int n = nums.length;
 
-         Map<Integer, Integer> prefixSumMap = new HashMap<>();
+         //creating the map
+         Map<Integer, Integer> map = new HashMap<>();
+         
+         int[] prefixSum = new int[n];
+         prefixSum[0] = nums[0];
 
-         prefixSumMap.put(0,1);
+         //filling the prefixSum array
+         for(int i = 1; i<nums.length; i++){
+            prefixSum[i] = prefixSum[i-1] + nums[i];
+         } 
 
-         for (int i = 0; i<nums.length; i++){
-            currentSum += nums[i];
 
-            int complement = currentSum - k;
+         //looping n, times
+         for (int j = 0; j<n; j++){
+            if(prefixSum[j]==k){
+                count++;
+            }
+            Integer val = prefixSum[j] - k;
 
-            
-                count += prefixSumMap.getOrDefault(complement, 0);
+            if(map.containsKey(val)){
 
-                prefixSumMap.put(currentSum, prefixSumMap.getOrDefault(currentSum, 0) + 1);
-            
+                count += map.get(val);
+            }
+            map.put(prefixSum[j], map.getOrDefault(prefixSum[j], 0) + 1);
          }
          return count;
 
