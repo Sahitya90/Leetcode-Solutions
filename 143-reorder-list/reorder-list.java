@@ -8,12 +8,10 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-
-//  the logic we are going to use here is the combination of three patterns, first we use the slow and fast pointer pattern to find the middle of the list, then we reverse the second half of the list and at last we join both the lists in the order that they become like the result
 class Solution {
     public void reorderList(ListNode head) {
         
-        ListNode slow = head; 
+        ListNode slow = head;
         ListNode fast = head;
 
         while(fast != null && fast.next != null){
@@ -21,33 +19,41 @@ class Solution {
             fast = fast.next.next;
         }
 
-        ListNode second = slow.next;
+        ListNode curr = slow.next;
         slow.next = null;
 
         ListNode prev = null;
-        ListNode curr = second;
-        ListNode temp;
-
+        
         while(curr != null){
-            temp = curr.next;
+
+            ListNode next = curr.next;
             curr.next = prev;
             prev = curr;
-            curr = temp;
+            curr = next;
+
         }
+        //after the prev becomes the head of the reversed second half
 
-        ListNode first = head;
-        second = prev;
-
-        while(second != null){
-            ListNode temp1= first.next;
-            ListNode temp2 = second.next;
-
-            first.next = second;
-            second.next = temp1;
-
-            first = temp1;
-            second = temp2;
-        }
+       
+        ListNode curr2 = prev;
+        ListNode curr1 = head;
         
+
+        while(curr2 != null){
+
+            //store the next node of both the lists
+            ListNode next1 = curr1.next;
+            ListNode next2 = curr2.next;
+
+            //adding elements from both lists
+            curr1.next = curr2;
+            curr2.next = next1;
+
+            //advance the pointer
+            curr1 = next1;
+            curr2 = next2;
+        }
+
+
     }
 }
