@@ -1,37 +1,33 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-         int count = 0 ;
-         int currentSum = 0;
-         int n = nums.length;
+        
 
-         //creating the map
-         Map<Integer, Integer> map = new HashMap<>();
-         
-         int[] prefixSum = new int[n];
-         prefixSum[0] = nums[0];
+        Map<Integer, Integer> map = new HashMap<>();
+        int count = 0;
 
-         //filling the prefixSum array
-         for(int i = 1; i<nums.length; i++){
-            prefixSum[i] = prefixSum[i-1] + nums[i];
-         } 
+        int[] prefixSum = new int[nums.length];
+        prefixSum[0] = nums[0];
 
+        for(int i = 1; i< nums.length; i++){
 
-         //looping n, times
-         for (int j = 0; j<n; j++){
-            if(prefixSum[j]==k){
-                count++;
-            }
-            Integer val = prefixSum[j] - k;
+            prefixSum[i]= nums[i] + prefixSum[i-1];
+        }
 
-            if(map.containsKey(val)){
+        for(int j = 0; j< nums.length; j++){
+            
+         if(prefixSum[j] == k){
+            count++;
+            
+           }
+           int value =  prefixSum[j] - k;
 
-                count += map.get(val);
-            }
-            map.put(prefixSum[j], map.getOrDefault(prefixSum[j], 0) + 1);
-         }
-         return count;
-
-
-
+           if(map.containsKey(value)){
+             count += map.get(value);
+           }
+           map.put(prefixSum[j], map.getOrDefault(prefixSum[j], 0) + 1);
+           }
+        
+        return count;
+        }
+        
     }
-}
