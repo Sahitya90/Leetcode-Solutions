@@ -20,10 +20,10 @@ class Solution {
                 if(sum < 0){
                     left++;
                 }
-                if(sum > 0){
+                else if(sum > 0){
                     right--;
                 }
-                if(sum == 0){
+                else{
                     result.add(Arrays.asList(nums[i], nums[left], nums[right]));
 
                     while (left < right && nums[left] == nums[left + 1]) left++;
