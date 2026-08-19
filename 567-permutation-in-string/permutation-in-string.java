@@ -1,64 +1,30 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
+
+        if(s1.length() >  s2.length()){
+            return false;
+        }
         
-        Map<Character, Integer> map = new HashMap<>();
-        int n1 = s1.length();
-        int n2 = s2.length();
+        int k = s1.length();
 
-         if (n1 > n2) return false;
+        int[] a1 = new int[26];
+        int[] a2 = new int[26];
 
-        for (char c : s1.toCharArray()){
+        for(int i =0; i<k; i++){
+            a1[s1.charAt(i) - 'a'] ++;
 
-            map.put(c, map.getOrDefault(c, 0) +1);
         }
-
-        //hashmap to store the elements of string 2
-
-        Map<Character, Integer> windowMap = new HashMap<>();
-
-        //here we create the fixed window
-
-        for(int i = 0; i < n1; i++){
-            char c= s2.charAt(i);
-            windowMap.put(c, windowMap.getOrDefault(c,0) +1);
-        }
-
-        //checks if the "map"  is same as "windowMap"
-        if(map.equals(windowMap)) return true;
-
-        // now we have got the result statement that elements of string 1 are there in string 2 
-    
-
-        //here we use the sliding window approach
-        //in the sliding window logic, we move forward and at the same time decrement the first one
-
-        int left = 0;
-        for(int right = n1; right<n2; right++){
-
-            //add the new element
-            char newChar = s2.charAt(right);
-            windowMap.put(newChar, windowMap.getOrDefault(newChar, 0) +1);
-
-            //remove the old char or the character where left points to
-            char oldChar = s2.charAt(left);
-            windowMap.put(oldChar, windowMap.get(oldChar) - 1);
-
-            //if the frequency for a element becomes 0 we remove it 
-
-            if(windowMap.get(oldChar)==0){
-                windowMap.remove(oldChar);
+        for(int right = 0; right<s2.length(); right++){
+            a2[s2.charAt(right) -'a'] ++;
+            
+            if(right >= k){
+                a2[s2.charAt(right-k) - 'a']--;
             }
-            left++;
 
-            //here we check the equivalence of map and windowMap
-
-            if(map.equals(windowMap)){
+            if(Arrays.equals(a1, a2)){
                 return true;
             }
-
-           
         }
-         return false;
-    
-}
+        return false;
+    }
 }
