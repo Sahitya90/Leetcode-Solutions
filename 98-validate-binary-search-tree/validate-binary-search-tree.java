@@ -15,22 +15,26 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        
-        return BST(root, null, null);
-    }
-    public boolean BST(TreeNode node, Integer min_value, Integer max_value){
 
-        if(node== null){
+        return comparison(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+        
+    public boolean comparison(TreeNode node, long lowerBound, long upperBound){
+
+       if(node == null){
             return true;
         }
 
-        if((min_value != null &&node.val <= min_value) || (max_value != null && node.val >= max_value)){
+        if(node.val <= lowerBound || node.val >= upperBound){
             return false;
         }
 
-        boolean left = BST(node.left, min_value, node.val);
-        boolean right = BST(node.right, node.val, max_value);
+        boolean left = comparison(node.left, lowerBound, node.val);
+        boolean right = comparison(node.right, node.val, upperBound);
+
 
         return left && right;
+
+        
     }
 }
