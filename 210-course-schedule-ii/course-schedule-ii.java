@@ -1,58 +1,43 @@
 class Solution {
+    public int[] findOrder(int n, int[][] pre) {
 
-    public boolean dfs(int curr, boolean[] vis, boolean rec[], List<List<Integer>> graph, Stack<Integer> stack){
+        int[] result = new int[n];
+        int[] indegree = new int[n];
+        Queue<Integer> q = new LinkedList<>();
+        int r = 0;
+        
+        for(int[] p : pre){
 
-        vis[curr] = true;
-        rec[curr] = true;
+            int u = p[0];
+            int v = p[1];
+            indegree[u]++;
+        }
 
-        for(int f : graph.get(curr)){
+        for(int i = 0; i<n; i++){
+            if(indegree[i] == 0){
+                q.add(i);
+            }
+        }
+        while(!q.isEmpty()){
+            int curr = q.poll();
+            result[r] = (curr);
+            r++;
 
-            if(rec[f]){
-                return true;
-            }else if(!vis[f]){
-                if(dfs(f, vis, rec, graph, stack)){
-                    return true;
+            for(int[] p : pre){
+
+                if(p[1] == curr){
+                    indegree[p[0]]--;
+                
+                
+                if(indegree[p[0]] == 0){
+                    q.add(p[0]);
+                }
                 }
             }
         }
-        rec[curr]= false;
-        stack.add(curr);
-        return false;
-    }
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        
-        List<List<Integer>> graph = new ArrayList<>();
-
-        for(int i = 0; i < numCourses; i++){
-            graph.add(new ArrayList<>());
-        }
-
-        for(int[] pre : prerequisites){
-            int courses = pre[0];
-            int requirement = pre[1];
-            graph.get(requirement).add(courses);
-
-        }
-        boolean vis[] = new boolean[numCourses];
-        boolean rec[] = new boolean[numCourses];
-        Stack<Integer> stack = new Stack<>();
-
-        
-
-        for(int i = 0; i<numCourses; i++){
-            if(!vis[i]){
-                if(dfs(i, vis, rec, graph, stack)){
-                    return new int[]{};     
-                    
-                }
-            }
-        }
-        int[] result = new int[numCourses];
-        int i = 0;
-        while(!stack.isEmpty()){
-            result[i] = stack.pop();
-            i++;
-        }
-        return result;
+        if (r != n) {
+            return new int[0];
+         }
+        return result; 
     }
 }
