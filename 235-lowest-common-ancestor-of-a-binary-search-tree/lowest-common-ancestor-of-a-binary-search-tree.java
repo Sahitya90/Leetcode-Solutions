@@ -19,7 +19,7 @@ class Solution {
             return root;
         }
 
-        if(p.val < root.val && q.val > root.val){
+        if(p.val < root.val && root.val < q.val){
             return root;
         }
         if(p.val < root.val && root.val > q.val){
