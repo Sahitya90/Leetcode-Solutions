@@ -26,8 +26,6 @@ class Solution {
             return -1;
         }
 
-        if(node != null){
-
             int left = inorder(node.left, k);
             if(left != -1){
                 return left;
@@ -42,7 +40,7 @@ class Solution {
             if(right != -1){
                 return right;
             }
-        }
+        
         return -1;
     }
 }
