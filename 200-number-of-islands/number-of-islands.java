@@ -1,34 +1,41 @@
 class Solution {
 
-    public void dfs(int i , int j, boolean vis[][], char grid[][], int n, int m){
-
-        if(i < 0 || j < 0 || i >= n || j >= m || vis[i][j] == true || grid[i][j] != '1'){
+    public void dfs(char[][] grid, int i, int j, boolean[][] vis){
+         if(i < 0 || j < 0 || j >= grid[0].length || i >= grid.length || grid[i][j] == '0' || vis[i][j] == true){
             return;
         }
 
         vis[i][j] = true;
-        dfs(i-1, j, vis, grid, n, m);
-        dfs(i, j+1, vis, grid, n, m);
-        dfs(i+1, j, vis, grid, n, m);
-        dfs(i, j-1, vis, grid, n, m);
+
+            dfs(grid, i-1, j, vis);
+               
+            dfs(grid, i+1, j, vis);
+               
+            dfs(grid, i, j -1, vis);
+              
+            dfs(grid, i, j + 1, vis);
+                
     }
+    
     public int numIslands(char[][] grid) {
-        int islands = 0;
-        int n = grid.length;
-        int m = grid[0].length;
 
-        boolean vis[][] = new boolean[n][m];
+        int i, j;
+        int m = grid.length;
+        int n = grid[0].length;
+        boolean[][] vis = new boolean[m][n];
+        int landCount = 0;
 
-        for(int i =0; i<n; i++){
-            for(int j = 0; j<m; j++){
-                if(grid[i][j] == '1' && !vis[i][j]){
-                    dfs(i,j, vis, grid, n, m); //1 component visit
-                    islands++;
+        for(i = 0; i<m; i++){
+            for(j = 0; j<n; j++){
 
+                if(vis[i][j]== false && grid[i][j] == '1'){
+                    dfs(grid, i, j, vis);
+                    landCount++;
                 }
             }
         }
-        return islands;
-
-    }
+        return landCount;
+        }
+        
+    
 }
