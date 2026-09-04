@@ -1,66 +1,63 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
-        int n = grid.length;
-        int m = grid[0].length;
-
-        int ans = 0;
-        boolean[][] vis = new boolean[n][m];
+        
         Queue<int[]> q = new LinkedList<>();
+        int freshCount = 0;
+        int minutes = 0;
 
-        //checking if places with 2, then adding them to the queue
-        for(int i =0; i<n; i++){
-            for(int j = 0; j<m; j++){
-                if(grid[i][j] ==2){
-                    q.add(new int[]{i,j,0});
-                    vis[i][j] = true;
+        for(int i = 0; i<grid.length; i++){
+            for(int j = 0; j<grid[0].length; j++){
+
+                if(grid[i][j] == 2){
+                    int[] a = {i, j};
+                    q.add(a);
+                }
+                if(grid[i][j] == 1){
+                    freshCount++;
                 }
             }
         }
-        //bfs logic
-        while(!q.isEmpty()){
+        while(!q.isEmpty() && freshCount > 0){
 
-            int[] curr = q.poll();
-            int i = curr[0];
-            int j = curr[1];
-            int t = curr[2];
+            int size = q.size();
+            for(int a = 0; a<size; a++){
 
-            ans = Math.max(ans, t);
+                int[] position = q.poll();
 
-            if(i-1 >=0 && vis[i-1][j]==false && grid[i-1][j] == 1){ //top
+                int i = position[0];
+                int j = position[1];
 
-                q.add(new int[]{i-1,j,t+1});
-                vis[i-1][j] = true;
+                int[][] directions = {
+                {-1, 0},
+                {1, 0},
+                {0, -1},
+                {0, 1}
+            };
+
+            for (int[] d : directions) {
+
+                int r = i + d[0];
+                int c = j + d[1];
+
+                if (r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] == 1) {
+
+                    grid[r][c] = 2;
+
+                    int[] array = {r, c};
+                    q.add(array);
+                    freshCount--;
+                }  
             }
-            if(i+1 < n && vis[i+1][j]==false && grid[i+1][j] == 1){ //bottom
-
-                q.add(new int[]{i+1,j,t+1});
-              
-                vis[i+1][j] = true;
             }
-             if(j-1 >=0 && vis[i][j-1]==false && grid[i][j-1] == 1){ //left
-
-                q.add(new int[]{i,j-1,t+1});
-              
-                vis[i][j-1] = true;
-            }
-             if(j+1 < m && vis[i][j+1]==false && grid[i][j+1] == 1){  //right
-
-                q.add(new int[]{i,j+1,t+1});
-              
-                vis[i][j+1] = true;
-            }
-
-
+            minutes++;
+            
         }
-        //check for fresh orange
-        for(int i =0; i<n; i++){
-            for(int j = 0; j<m; j++){
-                if(grid[i][j] == 1 && !vis[i][j]){
-                    return -1;
-                }
-            }
+        
+        if(freshCount > 0){
+            return -1;
         }
-        return ans;
-
+        return minutes;
+        
+        
     }
 }
