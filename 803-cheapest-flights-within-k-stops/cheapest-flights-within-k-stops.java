@@ -1,33 +1,31 @@
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        
-     
-        int[] original = new int[n];
-        int INF = (int) 1e9;
-        Arrays.fill(original, INF);
-        original[src]= 0;
 
+        int[] dist = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
 
-        for(int i = 0; i<=k; i++){
-            int[] temp = Arrays.copyOf(original, n);
+        dist[src] = 0;
 
-        for(int[] flight : flights){
+        for(int i =1; i<=k+1; i++){
 
-            int u = flight[0];
-            int v = flight[1];
-            int price = flight[2];
+            int[] temp = dist.clone();
+            for(int[] flight : flights){
 
-            if(original[u] != INF){
+                int a = flight[0]; //from
+                int b = flight[1];  // to 
+                int c = flight[2];  //price
 
-            if(original[u] + price < temp[v]){
-                temp[v] = original[u] + price;
+                if(dist[a] == Integer.MAX_VALUE){
+                    continue;
+                }
+
+            
+                if(dist[a] + c < temp[b]){
+                    temp[b] = dist[a] + c;
+                }
             }
-        }   
+            dist = temp;
         }
-        original = temp;
-        }
-        return original[dst] == INF ? -1 : original[dst];
-
-        
+        return dist[dst] ==  Integer.MAX_VALUE ? -1 : dist[dst];
     }
 }
