@@ -17,13 +17,8 @@ class Solution {
                 }
             }
         }
-        int answer = 0;
-        for(int value : dp){
-
-            answer = Math.max(answer, value);
-
-        }
-        return answer;
+        Arrays.sort(dp);
+        return dp[n-1];
         
     }
 }
